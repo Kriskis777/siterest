@@ -1,0 +1,9 @@
+{
+  "repo": "siterest",
+  "base": "/siterest",
+  "url": "https://kriskis777.github.io/siterest/",
+  "source": {
+    "branch": "main",
+    "path": "/docs"
+  }
+}

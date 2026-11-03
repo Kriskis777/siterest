@@ -1,0 +1,18 @@
+{
+  "routes": 9,
+  "internalLinksAndAssets": 206,
+  "staticChecks": "passed",
+  "interactionChecks": [
+    "invalid contact",
+    "simulated failure retains input",
+    "no fields sent over fetch",
+    "success route and focus",
+    "XSS escaped",
+    "copy draft",
+    "network failure retains input and re-enables form",
+    "duplicate prevention",
+    "project filters",
+    "mobile menu and Escape"
+  ],
+  "browserQA": "not performed: Work browser disabled, Mac locked"
+}

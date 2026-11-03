@@ -1,0 +1,1 @@
+{"name":"siterest","private":true,"type":"module","scripts":{"build":"node build.mjs && node scripts/prepare-pages.mjs","check":"node check.mjs && node scripts/check-pages.mjs"}}

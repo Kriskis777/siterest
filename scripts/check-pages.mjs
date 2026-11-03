@@ -1,0 +1,6 @@
+import {readFileSync,existsSync,readdirSync} from 'node:fs';
+import {join} from 'node:path';
+import {strict as assert} from 'node:assert';
+const cfg=JSON.parse(readFileSync('pages-config.json','utf8'));const files=[];function walk(dir){for(const e of readdirSync(dir,{withFileTypes:true})){const p=join(dir,e.name);e.isDirectory()?walk(p):files.push(p)}}walk('docs');let checked=0;
+for(const p of files.filter(x=>x.endsWith('.html'))){const html=readFileSync(p,'utf8');assert.ok(!/#team|id="team"/.test(html));for(const m of html.matchAll(/(?:href|src)="([^"]+)"/g)){const u=new URL(m[1],'https://local.test'+cfg.base+'/'+p.slice(5));if(u.origin!=='https://local.test')continue;assert.ok(u.pathname.startsWith(cfg.base+'/'),p+': escaped project base');let path=u.pathname.slice(cfg.base.length);const target=join('docs',path.endsWith('/')?path+'index.html':path);assert.ok(existsSync(target),p+': missing '+m[1]);if(u.hash)assert.ok(readFileSync(target,'utf8').includes(`id="${decodeURIComponent(u.hash.slice(1))}"`),p+': bad fragment '+m[1]);checked++}}
+const js=readFileSync('docs/assets/app.js','utf8');assert.ok(js.includes(`fetch(${JSON.stringify(cfg.base+'/request-ready/')}`));assert.ok(existsSync('docs/.nojekyll'));console.log(JSON.stringify({pagesFiles:files.filter(x=>x.endsWith('.html')).length,checked,base:cfg.base,peopleSection:'removed'}));
